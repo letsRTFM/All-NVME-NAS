@@ -1,20 +1,22 @@
 # Videos
 
 - [AR900i VS BD790i - Performance and Power Usage](https://www.youtube.com/watch?v=UALDaaPusxE)
-- [AR900i All NVME NAS Build - Part 1 Hardware](TBD)
-- [AR900i All NVME NAS Build - Part 2 Configuration](TBD)
+- [AR900i All NVME NAS Build - ALPINE LINUX + ZFS](TBD)
 
 ## Hardware
 
 - Power Supply: [HDPLEX 500W GaN](https://hdplex.com/hdplex-500w-gan-aio-atx-power-supply.html)
 - Motherboard: [AR900i](https://store.minisforum.com/products/minisforum-ar900i)
-- CPU: [Intel Core i9-13900HX 5.2 GHz - 24 Core 32 Threads](https://browser.geekbench.com/v6/cpu/4874137)
+- CPU: [Intel Core i9-13900HX 5.2 GHz - 24 Core 32 Threads](https://browser.geekbench.com/v6/cpu/4874137) *Built into motherboard
 - RAM: [Crucial 5600 96GB Kit](https://amzn.to/49RVpaD) *Affiliate Link
 - Case: [DAN A4 - H20](https://amzn.to/49JtkTj) *Affiliate Link
 - Storage: 6 x [Crucial P3 Plus 4TB](https://amzn.to/3Uc0iVs) *Affiliate Link
 - Cooling: 
   - 1 x [Noctua NF-A12x15](https://amzn.to/3uNb0Ju) *Affiliate Link
   - 2 x [Noctua NF-P12 redux](https://amzn.to/3w0QUMA) *Affiliate Link
+- Screws:
+  - M2.5 [Screws for Minisforum CPU Fan Bracket](https://amzn.to/4djLXPE) *Affiliate Link
+  - (Optional) [Misc Assorted PC Screws](https://amzn.to/4b4fPxQ) *Affiliate Link
 
 
 ## Software
@@ -148,7 +150,7 @@ zpool create -f -o ashift=12 \
  -O xattr=sa \
  -O relatime=on \
  -o autotrim=off \
- -m none zroot raidz /dev/nvme0n1p2 /dev/nvme1n1p2 /dev/nvme2n1p2 /dev/nvme3n1p2 /dev/nvme4n1p2 /dev/nvme5n1p2
+ -m none zroot raidz2 /dev/nvme0n1p2 /dev/nvme1n1p2 /dev/nvme2n1p2 /dev/nvme3n1p2 /dev/nvme4n1p2 /dev/nvme5n1p2
 ```
 
 ``` bash
@@ -159,7 +161,7 @@ zpool create -f -o ashift=12 \
  -O xattr=sa \
  -O relatime=on \
  -o autotrim=off \
- -m none DATA raidz /dev/nvme0n1p3 /dev/nvme1n1p3 /dev/nvme2n1p3 /dev/nvme3n1p3 /dev/nvme4n1p3 /dev/nvme5n1p3
+ -m none DATA raidz2 /dev/nvme0n1p3 /dev/nvme1n1p3 /dev/nvme2n1p3 /dev/nvme3n1p3 /dev/nvme4n1p3 /dev/nvme5n1p3
 ```
 
 #### Install OS
@@ -264,26 +266,47 @@ apk add openssh
 
 ##### previous cron files do not exist we set them up manually with `crontab -e`
 ### Set up trim cron job
-5 4 * * sat /usr/sbin/zpool trim zroot
-5 4 * * sat /usr/sbin/zpool trim DATA
+0 3 * * 6 /usr/sbin/zpool trim zroot
+0 4 * * 6 /usr/sbin/zpool trim DATA
 
 ### Set up scrub cron job
-5 4 * * sun /usr/sbin/zpool scrub zroot
-5 4 * * sun /usr/sbin/zpool scrub DATA
+0 3 * * 7 /usr/sbin/zpool scrub zroot
+0 4 * * 7 /usr/sbin/zpool scrub DATA
+
+### Mount the DATA ZFS Pool
+``` bash
+mkdir -p /mnt/DATA
+zfs set mountpoint=/mnt/DATA DATA
+```
+
+##### Setting Up NFS Shares
+
+``` bash
+addgroup nasusers
+adduser <your nfs username> nasusers
+mkdir -p /mnt/DATA/Projects
+chown -R root:nasusers /mnt/DATA/Projects/
+```
 
 ##### Setting Up Samba Shares
 
 ``` bash
-addgroup nasusers
-adduser <your samba username> nasusers
-
 chown -R root:nasusers /mnt/DATA/Projects
 chmod -R 771 /mnt/DATA/Projects
-
 apk add samba	
 smbpasswd -a <your samba username>
 vi /etc/samba/smb.conf
+```
+Add the following to /etc/samba/smb.conf
+```
+[Projects]
+    path = /mnt/DATA/Projects
+    valid users = <your smb username>
+    public = no
+    writable = yes
+```
 
+```
 rc-update add samba
 rc-service samba start
 ```
