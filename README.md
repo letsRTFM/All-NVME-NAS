@@ -272,12 +272,15 @@ apk add openssh
 
 ##### previous cron files do not exist we set them up manually with `crontab -e`
 ### Set up trim cron job
+```
 0 3 * * 6 /usr/sbin/zpool trim zroot
 0 4 * * 6 /usr/sbin/zpool trim DATA
-
+```
 ### Set up scrub cron job
+```
 0 3 * * 7 /usr/sbin/zpool scrub zroot
 0 4 * * 7 /usr/sbin/zpool scrub DATA
+```
 
 ### Mount the DATA ZFS Pool
 ``` bash
