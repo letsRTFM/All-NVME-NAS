@@ -260,7 +260,7 @@ reboot
 
 ``` bash
 rc-update add crond
-rc-service start crond
+rc-service crond start
 apk add openssh
 ```
 
