@@ -291,17 +291,17 @@ zfs set mountpoint=/mnt/DATA DATA
 ##### Setting Up NFS Shares
 
 ``` bash
+adduser <your nfs username>
 addgroup nasusers
 adduser <your nfs username> nasusers
 mkdir -p /mnt/DATA/Projects
 chown -R root:nasusers /mnt/DATA/Projects/
+chmod -R 771 /mnt/DATA/Projects
 ```
 
 ##### Setting Up Samba Shares
 
 ``` bash
-chown -R root:nasusers /mnt/DATA/Projects
-chmod -R 771 /mnt/DATA/Projects
 apk add samba	
 smbpasswd -a <your samba username>
 vi /etc/samba/smb.conf
