@@ -182,7 +182,7 @@ zpool import -N -R /mnt zroot
 zfs mount zroot/ROOT/${ID}
 zfs mount zroot/home
 
-apk --arch x86_64 -X http://dl-cdn.alpinelinux.org/alpine/latest-stable/main \
+apk --arch x86_64 -X https://dl-cdn.alpinelinux.org/alpine/latest-stable/main \
  -U --allow-untrusted --root /mnt --initdb add alpine-base
 
 cp /etc/hostid /mnt/etc
