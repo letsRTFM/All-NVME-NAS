@@ -110,27 +110,32 @@ parted /dev/nvme5n1 mkpart primary fat32 1MB 513MB
 
 ``` bash
 # Create the first ZFS pool partition, this one is for the OS
-parted /dev/nvme0n1 mkpart primary zfs 513MB 50513MB
-parted /dev/nvme1n1 mkpart primary zfs 513MB 50513MB
-parted /dev/nvme2n1 mkpart primary zfs 513MB 50513MB
-parted /dev/nvme3n1 mkpart primary zfs 513MB 50513MB
-parted /dev/nvme4n1 mkpart primary zfs 513MB 50513MB
-parted /dev/nvme5n1 mkpart primary zfs 513MB 50513MB
+parted /dev/nvme0n1 mkpart primary ext4 513MB 50513MB
+parted /dev/nvme1n1 mkpart primary ext4 513MB 50513MB
+parted /dev/nvme2n1 mkpart primary ext4 513MB 50513MB
+parted /dev/nvme3n1 mkpart primary ext4 513MB 50513MB
+parted /dev/nvme4n1 mkpart primary ext4 513MB 50513MB
+parted /dev/nvme5n1 mkpart primary ext4 513MB 50513MB
 ```
 
 ``` bash
 # Create the second ZFS pool partition, this one is for the DATA
-parted /dev/nvme0n1 mkpart primary zfs 50513MB 100%
-parted /dev/nvme1n1 mkpart primary zfs 50513MB 100%
-parted /dev/nvme2n1 mkpart primary zfs 50513MB 100%
-parted /dev/nvme3n1 mkpart primary zfs 50513MB 100%
-parted /dev/nvme4n1 mkpart primary zfs 50513MB 100%
-parted /dev/nvme5n1 mkpart primary zfs 50513MB 100%
+parted /dev/nvme0n1 mkpart primary ext4 50513MB 100%
+parted /dev/nvme1n1 mkpart primary ext4 50513MB 100%
+parted /dev/nvme2n1 mkpart primary ext4 50513MB 100%
+parted /dev/nvme3n1 mkpart primary ext4 50513MB 100%
+parted /dev/nvme4n1 mkpart primary ext4 50513MB 100%
+parted /dev/nvme5n1 mkpart primary ext4 50513MB 100%
 ```
 
 ``` bash
-# Set the first partition as EFI on nvme0n1
-sudo parted /dev/nvme0n1 set 1 esp on
+# Set the first partition as EFI
+parted /dev/nvme0n1 set 1 esp on
+parted /dev/nvme1n1 set 1 esp on
+parted /dev/nvme2n1 set 1 esp on
+parted /dev/nvme3n1 set 1 esp on
+parted /dev/nvme4n1 set 1 esp on
+parted /dev/nvme5n1 set 1 esp on
 ```
 
 ``` bash
@@ -204,7 +209,7 @@ rc-update add networking
 rc-update add hostname
 
 # Install ZFS
-apk add zfs zfs-lts
+apk add zfs zfs-lts lsblk
 rc-update add zfs-import sysinit
 rc-update add zfs-mount sysinit
 
