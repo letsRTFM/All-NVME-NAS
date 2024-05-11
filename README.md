@@ -221,7 +221,7 @@ mkinitfs -c /etc/mkinitfs/mkinitfs.conf "$(ls /lib/modules)"
 zfs set org.zfsbootmenu:commandline="quiet" zroot/ROOT
 
 cat << EOF >> /etc/fstab
-/dev/nmve0n1p1 /boot/efi vfat defaults 0 0
+/dev/nvme0n1p1 /boot/efi vfat defaults 0 0
 EOF
 
 mkdir -p /boot/efi
