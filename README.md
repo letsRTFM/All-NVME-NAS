@@ -66,7 +66,7 @@ EOF
 apk update  
 
 # Install Tools needeed for configuring openzfs
-apk add zfs zfs-scripts sgdisk wipefs util-linux lsblk
+apk add zfs zfs-scripts sgdisk wipefs util-linux lsblk parted
 modprobe zfs 
 zgenhostid -f 0x00bab10c
 
