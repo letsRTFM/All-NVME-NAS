@@ -244,6 +244,7 @@ efibootmgr -c -d "/dev/nvme0n1" -p "1" \
   -l '\EFI\ZBM\VMLINUZ.EFI'
 
 ### Copy EFI to portable location
+mkdir -p /boot/efi/EFI/BOOT
 cp /boot/efi/EFI/ZBM/VMLINUZ.EFI /boot/efi/EFI/BOOT/BOOTX64.EFI
 ```
 
