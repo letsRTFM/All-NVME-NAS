@@ -80,52 +80,52 @@ To Prep the disks... Run the following commands:
 
 ``` bash
 # Wipe the disks
-sudo wipefs --all /dev/nvme0n1
-sudo wipefs --all /dev/nvme1n1
-sudo wipefs --all /dev/nvme2n1
-sudo wipefs --all /dev/nvme3n1
-sudo wipefs --all /dev/nvme4n1
-sudo wipefs --all /dev/nvme5n1
+wipefs --all /dev/nvme0n1
+wipefs --all /dev/nvme1n1
+wipefs --all /dev/nvme2n1
+wipefs --all /dev/nvme3n1
+wipefs --all /dev/nvme4n1
+wipefs --all /dev/nvme5n1
 ```
 
 ``` bash
 # Create Partition Tables
-sudo parted /dev/nvme0n1 mklabel gpt
-sudo parted /dev/nvme1n1 mklabel gpt
-sudo parted /dev/nvme2n1 mklabel gpt
-sudo parted /dev/nvme3n1 mklabel gpt
-sudo parted /dev/nvme4n1 mklabel gpt
-sudo parted /dev/nvme5n1 mklabel gpt
+parted /dev/nvme0n1 mklabel gpt
+parted /dev/nvme1n1 mklabel gpt
+parted /dev/nvme2n1 mklabel gpt
+parted /dev/nvme3n1 mklabel gpt
+parted /dev/nvme4n1 mklabel gpt
+parted /dev/nvme5n1 mklabel gpt
 ```
 
 ``` bash
 # Create the 512MB EFI partition with 1MB offset
-sudo parted /dev/nvme0n1 mkpart primary fat32 1MB 513MB
-sudo parted /dev/nvme1n1 mkpart primary fat32 1MB 513MB
-sudo parted /dev/nvme2n1 mkpart primary fat32 1MB 513MB
-sudo parted /dev/nvme3n1 mkpart primary fat32 1MB 513MB
-sudo parted /dev/nvme4n1 mkpart primary fat32 1MB 513MB
-sudo parted /dev/nvme5n1 mkpart primary fat32 1MB 513MB
+parted /dev/nvme0n1 mkpart primary fat32 1MB 513MB
+parted /dev/nvme1n1 mkpart primary fat32 1MB 513MB
+parted /dev/nvme2n1 mkpart primary fat32 1MB 513MB
+parted /dev/nvme3n1 mkpart primary fat32 1MB 513MB
+parted /dev/nvme4n1 mkpart primary fat32 1MB 513MB
+parted /dev/nvme5n1 mkpart primary fat32 1MB 513MB
 ```
 
 ``` bash
 # Create the first ZFS pool partition, this one is for the OS
-sudo parted /dev/nvme0n1 mkpart primary zfs 513MB 50513MB
-sudo parted /dev/nvme1n1 mkpart primary zfs 513MB 50513MB
-sudo parted /dev/nvme2n1 mkpart primary zfs 513MB 50513MB
-sudo parted /dev/nvme3n1 mkpart primary zfs 513MB 50513MB
-sudo parted /dev/nvme4n1 mkpart primary zfs 513MB 50513MB
-sudo parted /dev/nvme5n1 mkpart primary zfs 513MB 50513MB
+parted /dev/nvme0n1 mkpart primary zfs 513MB 50513MB
+parted /dev/nvme1n1 mkpart primary zfs 513MB 50513MB
+parted /dev/nvme2n1 mkpart primary zfs 513MB 50513MB
+parted /dev/nvme3n1 mkpart primary zfs 513MB 50513MB
+parted /dev/nvme4n1 mkpart primary zfs 513MB 50513MB
+parted /dev/nvme5n1 mkpart primary zfs 513MB 50513MB
 ```
 
 ``` bash
 # Create the second ZFS pool partition, this one is for the DATA
-sudo parted /dev/nvme0n1 mkpart primary zfs 50513MB 100%
-sudo parted /dev/nvme1n1 mkpart primary zfs 50513MB 100%
-sudo parted /dev/nvme2n1 mkpart primary zfs 50513MB 100%
-sudo parted /dev/nvme3n1 mkpart primary zfs 50513MB 100%
-sudo parted /dev/nvme4n1 mkpart primary zfs 50513MB 100%
-sudo parted /dev/nvme5n1 mkpart primary zfs 50513MB 100%
+parted /dev/nvme0n1 mkpart primary zfs 50513MB 100%
+parted /dev/nvme1n1 mkpart primary zfs 50513MB 100%
+parted /dev/nvme2n1 mkpart primary zfs 50513MB 100%
+parted /dev/nvme3n1 mkpart primary zfs 50513MB 100%
+parted /dev/nvme4n1 mkpart primary zfs 50513MB 100%
+parted /dev/nvme5n1 mkpart primary zfs 50513MB 100%
 ```
 
 ``` bash
