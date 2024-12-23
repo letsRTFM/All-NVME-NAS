@@ -12,6 +12,7 @@
 - CPU: [Intel Core i9-13900HX 5.2 GHz - 24 Core 32 Threads](https://browser.geekbench.com/v6/cpu/4874137) *Built into motherboard
 - RAM: [Crucial 5600 96GB Kit](https://amzn.to/49RVpaD) *Affiliate Link
 - Case: [DAN A4 - H20](https://amzn.to/49JtkTj) *Affiliate Link
+- Additional Storage + 10Gbps Networking [Synology E10M20-T1 PLX Network Adapter with 2 NVME Slots](https://amzn.to/4gK64rd) *Affiliate Link
 - Storage: 6 x [Crucial P3 Plus 4TB](https://amzn.to/3Uc0iVs) *Affiliate Link
 - Cooling: 
   - 1 x [Noctua NF-A12x15](https://amzn.to/3uNb0Ju) *Affiliate Link
